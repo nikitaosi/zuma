@@ -6,7 +6,6 @@
 import {Player} from "../Player";
 
 export class MainScene extends Phaser.Scene {
-  private phaserSprite: Phaser.GameObjects.Sprite;
   private player: Player;
 
   constructor() {
@@ -16,11 +15,21 @@ export class MainScene extends Phaser.Scene {
   };
 
   preload(): void {
-    this.load.image("logo", "./src/boilerplate/assets/phaser.png");
   };
 
   create(): void {
-    this.phaserSprite = this.add.sprite(400, 300, "logo");
     this.player = new Player(this);
+    this.cameras.main.setBackgroundColor('#5d84a1');
+    this.input.setDefaultCursor('url(assets/target.cur), pointer');
+    console.log(this.player)
+    this.rotatePlayer();
   };
+
+  rotatePlayer(): void {
+    this.input.on('pointermove', function (pointer) {
+      this.player.rotation = Phaser.Math.Angle.Between(this.player.x, this.player.y, pointer.x, pointer.y);
+    }, this);
+
+    };
+
 }
