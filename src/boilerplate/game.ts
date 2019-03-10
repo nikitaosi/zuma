@@ -6,6 +6,7 @@
 
 import "phaser";
 import { MainScene } from "./scenes/mainScene";
+import {PreloadScene} from "./scenes/PreloadScene";
 
 // main game configuration
 const config: GameConfig = {
@@ -13,7 +14,7 @@ const config: GameConfig = {
   height: 600,
   type: Phaser.AUTO,
   parent: "game",
-  scene: MainScene,
+  scene: [PreloadScene, MainScene],
   physics: {
     default: "arcade",
     arcade: {
