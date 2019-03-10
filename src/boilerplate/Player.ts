@@ -1,10 +1,28 @@
 export class Player extends Phaser.GameObjects.Container {
-    constructor (scene) {
-        super (scene);
-        let player = scene.make.sprite({x: 200, y: 300, key: 'player'}, true);
-        let ball = scene.make.sprite({x: 350, y: 300, key: 'ball'}, true);
+    private ball: Phaser.Physics.Arcade.Sprite;
+
+    constructor (scene, x, y) {
+        super (scene, x, y);
+        var player = scene.make.sprite({key: 'player'});
+        this.ball = scene.physics.add.sprite({x: 100, y: 0, key: 'ball'});
+
         this.add(player);
-        this.add(ball);
+        this.add(this.ball);
+        this.rotate();
+
     }
 
+    shot(pointer): void {
+        this.ball.setVelocity(300,100);
+    };
+
+    rotate(): void {
+        this.scene.input.on('pointermove', function (pointer) {
+            this.rotation = Phaser.Math.Angle.Between(this.x, this.y, pointer.x, pointer.y);
+        }, this);
+    }
+
+    update(delta): void {
+
+    }
 }

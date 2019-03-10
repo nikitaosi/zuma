@@ -10,8 +10,8 @@ import {PreloadScene} from "./scenes/PreloadScene";
 
 // main game configuration
 const config: GameConfig = {
-  width: 1024,
-  height: 768,
+  width: 800,
+  height: 600,
   type: Phaser.AUTO,
   parent: "game",
   scene: [PreloadScene, MainScene],

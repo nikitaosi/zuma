@@ -4,9 +4,11 @@
  * @license      Digitsensitive
  */
 import {Player} from "../Player";
+import {Ball} from "../Ball";
 
 export class MainScene extends Phaser.Scene {
   private player: Player;
+  private playerBalls: Phaser.Physics.Arcade.Group;
 
   constructor() {
     super({
@@ -14,22 +16,22 @@ export class MainScene extends Phaser.Scene {
     });
   };
 
-  preload(): void {
-  };
-
   create(): void {
-    this.player = new Player(this);
+    this.player = new Player(this, 400, 300);
+    this.add.existing(this.player);
     this.cameras.main.setBackgroundColor('#5d84a1');
     this.input.setDefaultCursor('url(assets/target.cur), pointer');
-    console.log(this.player)
-    this.rotatePlayer();
-  };
 
-  rotatePlayer(): void {
-    this.input.on('pointermove', function (pointer) {
-      this.player.rotation = Phaser.Math.Angle.Between(this.player.x, this.player.y, pointer.x, pointer.y);
+    // Add group for Bullet objects
+//    this.playerBalls = this.physics.add.group({classType: Ball, runChildUpdate: true});
+
+    // Fires bullet from player on left click of mouse
+    this.input.on('pointerdown', function (pointer) {
+
+    // Get bullet from bullets group
+      var bullet =  this.playerBalls.get().setActive(true).setVisible(true);
+      bullet.fire(this.player, pointer);
     }, this);
-
-    };
-
+    
+  };
 }
