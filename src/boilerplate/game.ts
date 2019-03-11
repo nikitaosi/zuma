@@ -14,6 +14,7 @@ const config: GameConfig = {
   height: 600,
   type: Phaser.AUTO,
   parent: "game",
+//  pixelArt : true,
   scene: [PreloadScene, MainScene],
   physics: {
     default: "arcade",
@@ -21,7 +22,8 @@ const config: GameConfig = {
       debug:true,
       gravity: { y: 200 }
     }
-  }
+  },
+
 };
 
 // game class

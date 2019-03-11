@@ -43,6 +43,7 @@ export class MainScene extends Phaser.Scene {
       r.setData('order',i);
       r.setData('move',true);
       r.setData('vector',new Phaser.Math.Vector2());
+      r.setData('scene',this);
       r.setInteractive();
       r.setImmovable(true);
       r.body.isCircle = true;
@@ -50,11 +51,16 @@ export class MainScene extends Phaser.Scene {
       r.body.allowGravity = false;
       r.on('pointerdown',function (e) {
         console.log('order is :'+' '+this.getData('order'));
+        let scene = this.getData('scene');
+        scene.stopOthersBalls(this.getData('order'));
+
+         // r.setCollideCallback(collide, this);
 
 
+      })
 
-
-       })
+      this.physics.add.collider(r, stat);
+      this.physics.add.overlap(r, stat,this.collision, null, this);
       this.tweens.add({
         targets:r,
         z:1,
@@ -62,7 +68,7 @@ export class MainScene extends Phaser.Scene {
         duration:12000,
         // yoyo :true,
         //repeat: -1
-        delay:i*400
+        delay:i*570
       });
 
     }
@@ -78,17 +84,22 @@ export class MainScene extends Phaser.Scene {
 //
   };
 
+  collision():void
+  {
+    console.log('collision');
+  }
+
   createPath():void
   {
-    var vectors = [new Vector2( 164, 446, ),];
+    var vectors = [new Vector2( 0, 0, ),];
     this.tween = [];
     this.graphics = this.add.graphics();
-    this.path = new Phaser.Curves.Path(50,500);
+    this.path = new Phaser.Curves.Path(800,600);
     this.path.splineTo(vectors);
-    this.path.lineTo(700, 300);
-    this.path.lineTo(600, 350);
-    this.path.ellipseTo(200, 100, 100, 250, false, 0);
-    this.path.cubicBezierTo(222, 119, 308, 107, 208, 368);
+   // this.path.lineTo(800, 600);
+   // this.path.lineTo(600, 350);
+    //this.path.ellipseTo(200, 100, 100, 250, false, 0);
+    //this.path.cubicBezierTo(222, 119, 308, 107, 208, 368);
     //this.path.ellipseTo(60, 60, 0, 360, true);
   }
 
@@ -98,7 +109,7 @@ export class MainScene extends Phaser.Scene {
 
     for (let i = 0; i < 10; i++) {
 
-      let ball = this.follower.create(-50,0,'ball');
+      let ball = this.follower.create(0,0,'ball');
       //let ball = this.make.sprite({x:-50,key:'ball'});
       ball.setData('order',i);
       ball.setData('move',true);
@@ -111,7 +122,7 @@ export class MainScene extends Phaser.Scene {
       ball.setInteractive();
       ball.on('pointerdown',function (ev,ff,ff2,ff3,ff4) {
         console.log("object order is: "+this.getData('order'));
-        console.log("object move is : "+this.getData('move'));
+        console.log("object move is : "+this.getData('move')+"NELLO");
         let scene = this.getData('scene');
         scene.stopOthersBalls(this.getData('order'));
 
@@ -122,15 +133,15 @@ export class MainScene extends Phaser.Scene {
       });
 
       ball.setData('vector',new Phaser.Math.Vector2());
-      this.tween[i] = this.tweens.add({
-        targets:ball,
-        z:1,
-        ease:'Sine.EaseInOut',
-        duration:12000,
-        // yoyo :true,
-        //repeat: -1
-        delay:i*400
-      });
+     //this.tween[i] = this.tweens.add({
+     //  targets:ball,
+     //  z:1,
+     //  ease:'Sine.EaseInOut',
+     //  duration:100,
+     //  // yoyo :true,
+     //  //repeat: -1
+     //  delay:i*5200
+     //});
     }
   }
 
@@ -149,16 +160,29 @@ export class MainScene extends Phaser.Scene {
   {
     console.log(count);
       let ch = this.follower.getChildren();
-       //ch[count].setData('move',false);
+      console.log(ch.length);
+      var ball =<Phaser.Physics.Arcade.Sprite> this.follower.getChildren()[count];
+      ball.disableBody(true,true);
+    console.log(ball);
+   // console.log(count);
+
+
+    //ch[count].setData('move',false);
       //console.log(ch.length);
 
-       for (let i2 = ch.length-1; i2 > count; i2--) {
-         ch[i2].setData('move',false);
+       for (let i = 0; i <  count; i++) {
+         ch[i].setData('move',false);
+         console.log(i);
        }
+
+
 //
       //for (let i = 0; i < ch.length; i++) {
-      //  console.log(ch);
+      //   // ch[i].setData('move',false);
+      //  console.log(ch[i].getData('move'));
       //}
+
+       // this.follower.remove(this.follower.getChildren()[count],true);
 
   }
 
