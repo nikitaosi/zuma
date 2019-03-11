@@ -6,7 +6,7 @@ export class Ball extends Phaser.GameObjects.Sprite {
     private born: number;
 
     constructor (scene, x, y) {
-        super(scene, x, y, 'balls', Phaser.Math.Between(0,3));
+        super(scene, x-25, y, 'balls', Phaser.Math.Between(0,3));
         this.speed = 0.6;
         this.direction = 0;
         this.xSpeed = 0;

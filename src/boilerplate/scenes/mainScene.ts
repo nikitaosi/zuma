@@ -25,8 +25,7 @@ export class MainScene extends Phaser.Scene {
 
     // Add group for Bullet objects
     // @ts-ignore
-    this.playerBalls = this.physics.add.group({classType: Ball,
-      maxSize: 8, runChildUpdate: true});
+    this.playerBalls = this.physics.add.group({classType: Ball, runChildUpdate: true});
     this.playerBalls.create()
     // Fires bullet from player on left click of mouse
     this.input.on('pointerdown', function (pointer) {
