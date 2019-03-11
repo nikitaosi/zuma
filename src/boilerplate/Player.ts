@@ -4,12 +4,15 @@ import {Ball} from "./Ball";
 export class Player extends Phaser.GameObjects.Container {
     private ball: Ball[];
     private ballCount:integer;
-
+    public ballsUpdate(time, delta): void {
+        this.ball.forEach(function (b) {
+            b.update(time, delta);
+        })
+    }
 
     constructor (scene:MainScene, x, y) {
         super (scene, x, y);
         var player = scene.make.sprite({key: 'player'});
-
         this.add(player);
         this.rotate();
 
@@ -28,7 +31,7 @@ export class Player extends Phaser.GameObjects.Container {
 
 
         scene.input.on('pointerdown', function (pointer) {
-            this.ball[0].fire(this, pointer);
+            this.ball[0].fire(pointer);
         }, this);
 
     }
@@ -39,7 +42,6 @@ export class Player extends Phaser.GameObjects.Container {
         }, this);
     }
 
-    update(delta): void {
 
-    }
+
 }

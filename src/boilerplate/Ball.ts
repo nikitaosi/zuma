@@ -7,15 +7,15 @@ export class Ball extends Phaser.GameObjects.Sprite {
 
     constructor (scene, x, y) {
         super(scene, x-30, y, 'balls', Phaser.Math.Between(0,3));
-        this.speed = 0.01;
+        this.speed = 0.3;
         this.direction = 0;
         this.xSpeed = 0;
         this.ySpeed = 0;
     }
 
-    fire(player, target): void {
-            this.setPosition(player.x, player.y);
-            this.direction = Math.atan( (target.x-this.x) / (target.y-this.y));
+    fire(target): void {
+            this.setPosition(70, 0);
+            this.direction = Math.atan( (target.x-this.x) / (target.y-this.y-60));
             if (target.y >= this.y)
             {
                 this.xSpeed = this.speed*Math.sin(this.direction);

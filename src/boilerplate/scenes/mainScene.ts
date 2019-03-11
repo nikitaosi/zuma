@@ -4,7 +4,6 @@
  * @license      Digitsensitive
  */
 import {Player} from "../Player";
-import {Ball} from "../Ball";
 
 export class MainScene extends Phaser.Scene {
   private player: Player;
@@ -23,6 +22,10 @@ export class MainScene extends Phaser.Scene {
     this.cameras.main.setBackgroundColor('#71626f');
     this.input.setDefaultCursor('url(assets/target.cur), pointer');
 
-
   };
+
+  update(time, delta): void {
+    this.player.ballsUpdate(time, delta);
+  }
+
 }
