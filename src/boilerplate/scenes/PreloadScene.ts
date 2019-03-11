@@ -8,7 +8,7 @@ export class PreloadScene extends Phaser.Scene{
 
     preload(): void {
         this.load.image('player', './assets/player.png');
-        this.load.image('ball', './assets/ball.png');
+        this.load.spritesheet('balls', './assets/ball.png', {frameWidth: 47, frameHeight: 46});
     };
 
     create(): void {

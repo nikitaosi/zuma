@@ -20,18 +20,20 @@ export class MainScene extends Phaser.Scene {
 
     this.player = new Player(this, 400, 300);
     this.add.existing(this.player);
-    this.cameras.main.setBackgroundColor('#5d84a1');
+    this.cameras.main.setBackgroundColor('#71626f');
     this.input.setDefaultCursor('url(assets/target.cur), pointer');
 
     // Add group for Bullet objects
     // @ts-ignore
-    this.playerBalls = this.physics.add.group({classType: Ball, runChildUpdate: true});
+    this.playerBalls = this.physics.add.group({classType: Ball,
+      maxSize: 8, runChildUpdate: true});
+    this.playerBalls.create()
     // Fires bullet from player on left click of mouse
     this.input.on('pointerdown', function (pointer) {
-
+    console.log(this.playerBalls.children);
     // Get bullet from bullets group
-      var bullet =  this.playerBalls.get().setActive(true).setVisible(true);
-      bullet.fire(this.player, pointer);
+      var ball =  this.playerBalls.get().setActive(true).setVisible(true);
+      ball.fire(this.player, pointer);
     }, this);
     
   };

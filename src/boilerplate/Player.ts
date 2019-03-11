@@ -4,7 +4,6 @@ export class Player extends Phaser.GameObjects.Container {
     constructor (scene, x, y) {
         super (scene, x, y);
         var player = scene.make.sprite({key: 'player'});
-        this.ball = scene.physics.add.sprite({x: 100, y: 0, key: 'ball'});
 
         this.add(player);
         this.rotate();
