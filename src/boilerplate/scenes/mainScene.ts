@@ -30,11 +30,31 @@ export class MainScene extends Phaser.Scene {
   };
 
   create(): void {
-    MainScene.ballsCount = 4;
-    MainScene.ballsCountCurrent = 0;
-   // this.player = new Player(this);
-   // this.tween[0];
 
+     this.createField();
+     this.createBalls();
+     this.debugStopSpace();
+
+
+//
+  };
+
+  collision(ob1,ob2):void
+  {
+    if( MainScene.checkColl)
+    {
+      console.log(ob1.getData('order'));
+      console.log(ob2.getData('order'));
+      //console.log(ob3.getData('order'));
+      console.log('collision');
+      this.setActiveBalls(ob1.getData('order'),true);
+      MainScene.checkColl = false;
+    }
+
+  }
+
+  debugStopSpace():void
+  {
     this.input.keyboard.on('keydown_SPACE', function (event) {
       var r = this.follower.getChildren()
       for (let i = 0; i < r.length; i++) {
@@ -49,17 +69,35 @@ export class MainScene extends Phaser.Scene {
 
       }
       MainScene.AllowToMove = !MainScene.AllowToMove;
-     console.log('stop');
-     console.log(r)
+      console.log('stop');
+      console.log(r)
 
 
     },this );
+  }
 
-     this.createField();
+  createPath():void
+  {
+    var vectors = [new Vector2( 0, 0, ),];
+    this.tween = [];
+    this.graphics = this.add.graphics();
+    this.path = new Phaser.Curves.Path(800,600);
+    this.path.splineTo(vectors);
+   // this.path.lineTo(800, 600);
+   // this.path.lineTo(600, 350);
+    //this.path.ellipseTo(200, 100, 100, 250, false, 0);
+    //this.path.cubicBezierTo(222, 119, 308, 107, 208, 368);
+    //this.path.ellipseTo(60, 60, 0, 360, true);
+  }
+
+  createBalls():void
+  {
+    MainScene.ballsCount = 4;
+    MainScene.ballsCountCurrent = 0;
     MainScene.checkColl = false;
+
+
     var stat = this.physics.add.group();
-    //var r =<Phaser.Physics.Arcade.Sprite> stat.create(50,200,'ball');
-    //var r =<Phaser.Physics.Arcade.Sprite> stat.create(100,200,'ball');
 
     this.follower = stat;
     this.timedEvent = this.time.addEvent({ delay: 600, callback: function () {
@@ -104,82 +142,6 @@ export class MainScene extends Phaser.Scene {
           this.timedEvent.remove(false);
         }
       }, callbackScope: this, loop: true });
-
-
-
-
-//
-  };
-
-  collision(ob1,ob2,ob3):void
-  {
-    if( MainScene.checkColl)
-    {
-      console.log(ob1.getData('order'));
-      console.log(ob2.getData('order'));
-      //console.log(ob3.getData('order'));
-      console.log('collision');
-      this.setActiveBalls(ob1.getData('order'),true);
-      MainScene.checkColl = false;
-    }
-
-  }
-
-  createPath():void
-  {
-    var vectors = [new Vector2( 0, 0, ),];
-    this.tween = [];
-    this.graphics = this.add.graphics();
-    this.path = new Phaser.Curves.Path(800,600);
-    this.path.splineTo(vectors);
-   // this.path.lineTo(800, 600);
-   // this.path.lineTo(600, 350);
-    //this.path.ellipseTo(200, 100, 100, 250, false, 0);
-    //this.path.cubicBezierTo(222, 119, 308, 107, 208, 368);
-    //this.path.ellipseTo(60, 60, 0, 360, true);
-  }
-
-  createBalls():void
-  {
-    this.follower = this.physics.add.group();
-
-    for (let i = 0; i < 10; i++) {
-
-      let ball = this.follower.create(0,0,'ball');
-      //let ball = this.make.sprite({x:-50,key:'ball'});
-      ball.setData('order',i);
-      ball.setData('move',true);
-
-
-
-      //this.follower.add(ball);
-
-      let rBall = <Phaser.GameObjects.Sprite>ball;
-      rBall.setData('scene',this);
-      ball.setInteractive();
-      ball.on('pointerdown',function (ev,ff,ff2,ff3,ff4) {
-        console.log("object order is: "+this.getData('order'));
-        console.log("object move is : "+this.getData('move')+"NELLO");
-        let scene = this.getData('scene');
-        scene.setActiveBalls(this.getData('order'));
-
-       // console.log(scene);
-
-
-
-      });
-
-      ball.setData('vector',new Phaser.Math.Vector2());
-     //this.tween[i] = this.tweens.add({
-     //  targets:ball,
-     //  z:1,
-     //  ease:'Sine.EaseInOut',
-     //  duration:100,
-     //  // yoyo :true,
-     //  //repeat: -1
-     //  delay:i*5200
-     //});
-    }
   }
 
 
@@ -273,7 +235,7 @@ export class MainScene extends Phaser.Scene {
 
       update(time: number, delta: number): void
       {
-        this.drawGraphicsPath();
+         this.drawGraphicsPath();
          this.moveBalls();
       }
 
