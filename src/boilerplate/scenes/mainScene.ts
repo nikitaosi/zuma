@@ -17,14 +17,15 @@ export class MainScene extends Phaser.Scene {
   };
 
   create(): void {
+
     this.player = new Player(this, 400, 300);
     this.add.existing(this.player);
     this.cameras.main.setBackgroundColor('#5d84a1');
     this.input.setDefaultCursor('url(assets/target.cur), pointer');
 
     // Add group for Bullet objects
-//    this.playerBalls = this.physics.add.group({classType: Ball, runChildUpdate: true});
-
+    // @ts-ignore
+    this.playerBalls = this.physics.add.group({classType: Ball, runChildUpdate: true});
     // Fires bullet from player on left click of mouse
     this.input.on('pointerdown', function (pointer) {
 

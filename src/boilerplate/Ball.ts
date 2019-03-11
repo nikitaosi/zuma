@@ -7,17 +7,12 @@ export class Ball extends Phaser.GameObjects.Image {
 
     constructor (scene, x, y) {
         super(scene, x, y, 'ball');
-
-        this.speed = 0.2;
+        this.speed = 0.6;
         this.direction = 0;
         this.xSpeed = 0;
         this.ySpeed = 0;
         this.setSize(20, 20);
-        this.body.isCircle = true;
-
-        this.scene.input.on('pointerdown', function (pointer) {
-            this.fire(scene.player, pointer);
-        }, this);
+//        this.body.isCircle = true;
     }
 
     fire(player, target): void {
@@ -35,8 +30,6 @@ export class Ball extends Phaser.GameObjects.Image {
                 this.xSpeed = -this.speed*Math.sin(this.direction);
                 this.ySpeed = -this.speed*Math.cos(this.direction);
             }
-
-            this.rotation = player.rotation; // angle bullet with shooters rotation
     }
 
     update(time, delta): void {

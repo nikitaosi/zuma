@@ -7,14 +7,8 @@ export class Player extends Phaser.GameObjects.Container {
         this.ball = scene.physics.add.sprite({x: 100, y: 0, key: 'ball'});
 
         this.add(player);
-        this.add(this.ball);
         this.rotate();
-
     }
-
-    shot(pointer): void {
-        this.ball.setVelocity(300,100);
-    };
 
     rotate(): void {
         this.scene.input.on('pointermove', function (pointer) {
