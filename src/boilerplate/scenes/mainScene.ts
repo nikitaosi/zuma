@@ -25,16 +25,17 @@ export class MainScene extends Phaser.Scene {
 
     // Add group for Bullet objects
     // @ts-ignore
-    this.playerBalls = this.physics.add.group({classType: Ball,
-      maxSize: 8, runChildUpdate: true});
-    this.playerBalls.create()
+    //this.playerBalls = this.physics.add.group({classType: Ball,
+    //  maxSize: 8, runChildUpdate: true});
+
+    //this.playerBalls.createMultiple()
     // Fires bullet from player on left click of mouse
     this.input.on('pointerdown', function (pointer) {
-    console.log(this.playerBalls.children);
+   // console.log(this.playerBalls.children);
     // Get bullet from bullets group
-      var ball =  this.playerBalls.get().setActive(true).setVisible(true);
-      ball.fire(this.player, pointer);
+     // var ball =  this.playerBalls.get().setActive(true).setVisible(true);
+     // ball.fire(this.player, pointer);
     }, this);
-    
+
   };
 }

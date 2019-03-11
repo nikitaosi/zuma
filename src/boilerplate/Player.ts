@@ -1,12 +1,33 @@
-export class Player extends Phaser.GameObjects.Container {
-    private ball: Phaser.Physics.Arcade.Sprite;
+import {MainScene} from "./scenes/mainScene";
+import {Ball} from "./Ball";
 
-    constructor (scene, x, y) {
+export class Player extends Phaser.GameObjects.Container {
+    private ball: Ball[];
+    private ballCount:integer;
+
+
+    constructor (scene:MainScene, x, y) {
         super (scene, x, y);
         var player = scene.make.sprite({key: 'player'});
 
         this.add(player);
         this.rotate();
+
+        this.ballCount = 5;
+        this.ball = [];
+
+        for (let i = 0; i < this.ballCount; i++) {
+
+            this.ball[i] = new Ball(scene, 0, 0);
+           //
+            scene.physics.world.enable(this.ball[i]);
+        }
+        console.log(this.ball);
+        this.ball[0].x+=70;
+        this.add(this.ball[0]);
+
+        this.add(this.ball[1]);
+
     }
 
     rotate(): void {

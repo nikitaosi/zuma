@@ -11,7 +11,7 @@ export class Ball extends Phaser.GameObjects.Sprite {
         this.direction = 0;
         this.xSpeed = 0;
         this.ySpeed = 0;
-        this.setSize(47, 47);
+      //  this.setSize(47, 47);
 //        this.body.isCircle = true;
 
 
