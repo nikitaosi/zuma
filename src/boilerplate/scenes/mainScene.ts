@@ -5,6 +5,11 @@
  */
 import {Player} from "../Player";
 import Vector2 = Phaser.Math.Vector2;
+import {Category,CategoryLogger,CategoryServiceFactory,CategoryConfiguration,LogLevel} from "typescript-logging";
+export const catService = new Category("service");
+export const beadsLog = new Category("BEADS",catService);
+export const generalLog = new Category("GENERAL");
+
 
 export class MainScene extends Phaser.Scene {
 
@@ -30,12 +35,13 @@ export class MainScene extends Phaser.Scene {
   };
 
   create(): void {
-
+      generalLog.warn('-----------');
+      generalLog.warn('---START---');
+      generalLog.warn('-----------');
      this.createField();
      this.createBalls();
      this.debugStopSpace();
-
-
+    //this.physics.world.
 //
   };
 
@@ -43,10 +49,9 @@ export class MainScene extends Phaser.Scene {
   {
     if( MainScene.checkColl)
     {
-      console.log(ob1.getData('order'));
-      console.log(ob2.getData('order'));
-      //console.log(ob3.getData('order'));
-      console.log('collision');
+        let order = ob1.getData('order');
+        let order2 = ob2.getData('order');
+        beadsLog.debug("Столкновение "+order+" и "+order2 + ' шара');
       this.setActiveBalls(ob1.getData('order'),true);
       MainScene.checkColl = false;
     }
@@ -103,6 +108,7 @@ export class MainScene extends Phaser.Scene {
     this.timedEvent = this.time.addEvent({ delay: 600, callback: function () {
 
         let r =<Phaser.Physics.Arcade.Sprite> stat.create(800,600,'ball');
+
         //r.setSize(r.width,r.height+4);
         r.setData('order',MainScene.ballsCountCurrent);
         MainScene.ballsCountCurrent+=1;
@@ -112,12 +118,15 @@ export class MainScene extends Phaser.Scene {
         r.setData('scene',this);
         r.setInteractive();
         r.setImmovable(true);
-        r.body.isCircle = true;
+
+        r.body.isCircle=true;
         // @ts-ignore
         r.body.allowGravity = false;
         r.on('pointerdown',function (e) {
-          console.log('order is :'+' '+this.getData('order'));
-          let scene = this.getData('scene');
+         // console.log('order is :'+' '+this.getData('order'));
+
+            beadsLog.debug("Уничтожение "+this.getData('order') + ' шара');
+            let scene = this.getData('scene');
           scene.setActiveBalls(this.getData('order'));
           MainScene.checkColl = true;
           // r.setCollideCallback(collide, this);
@@ -125,17 +134,31 @@ export class MainScene extends Phaser.Scene {
 
         })
 
-
-        this.physics.add.collider(r, stat);
+        //this.physics.add.collider(r, stat);
         this.physics.add.overlap(r, stat,this.collision, null, this);
         r.setData('tween',this.tweens.add({
           targets:r,
           z:1,
           ease:'Sine.EaseInOut',
-          duration:12000,
+          duration:15500,
           // yoyo :true,
           //repeat: -1
         }));
+
+           //var z = this.add.zone(300,300,20,20);
+           //this.physics.world.enable(z);
+           //z.body.isCircle = true;
+
+           //stat.add(z);
+           //this.tweens.add({
+           //    targets:z,
+           //    z:1,
+           //    ease:'Sine.EaseInOut',
+           //    duration:15500,
+           //    // yoyo :true,
+           //    //repeat: -1
+           //})
+
 
         if(MainScene.ballsCountCurrent==MainScene.ballsCount )
         {
@@ -157,6 +180,7 @@ export class MainScene extends Phaser.Scene {
    */
   setActiveBalls(count:integer, active:boolean):void
   {
+    //  var a =
       let ch = this.follower.getChildren();
       var ball =<Phaser.Physics.Arcade.Sprite> this.follower.getChildren()[count];
       if(active)
