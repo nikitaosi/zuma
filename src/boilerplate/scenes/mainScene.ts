@@ -81,12 +81,12 @@ export class MainScene extends Phaser.Scene {
     var vectors = [new Vector2( 0, 0, ),];
     this.tween = [];
     this.graphics = this.add.graphics();
-    this.path = new Phaser.Curves.Path(800,600);
-    this.path.splineTo(vectors);
+    this.path = new Phaser.Curves.Path(50,550);
+    //this.path.splineTo(vectors);
    // this.path.lineTo(800, 600);
    // this.path.lineTo(600, 350);
     //this.path.ellipseTo(200, 100, 100, 250, false, 0);
-    //this.path.cubicBezierTo(222, 119, 308, 107, 208, 368);
+    this.path.cubicBezierTo(750, 550, 1, 1, 800, 1);
     //this.path.ellipseTo(60, 60, 0, 360, true);
   }
 
@@ -157,49 +157,22 @@ export class MainScene extends Phaser.Scene {
    */
   setActiveBalls(count:integer, active:boolean):void
   {
-    console.log(count);
       let ch = this.follower.getChildren();
-      console.log(ch.length);
       var ball =<Phaser.Physics.Arcade.Sprite> this.follower.getChildren()[count];
-
       if(active)
       {
         for (let i = count; i >=  0; i--) {
           ch[i].setData('move',true);
-          console.log(i);
-          // @ts-ignore
-          //ch[i].z = ch[i].getData('lastT');
-          //// @ts-ignore
-          //console.log(ch[i].z);
           ch[i].getData('tween').resume();
         }
       }
       else {
         ball.disableBody(true,true);
-
-
         for (let i = 0; i <  count; i++) {
           ch[i].setData('move',false);
-          // @ts-ignore
-          //ch[i].setData('lastT',ch[i].z);
-          //console.log(ch[i].getData('lastT'));
           ch[i].getData('tween').pause();
         }
       }
-
-
-    console.log(ball);
-   // console.log(count);
-
-
-    //ch[count].setData('move',false);
-      //console.log(ch.length);
-
-
-
-
-
-
   }
 
   drawGraphicsPath():void
@@ -207,14 +180,12 @@ export class MainScene extends Phaser.Scene {
     this.graphics.clear();
     this.graphics.lineStyle(2, 0xffffff, 1);
     this.path.draw(this.graphics);
-
   }
 
   moveBalls():void
   {
     if(MainScene.AllowToMove){
     this.follower.getChildren().forEach((function (ch) {
-
       var allowMove = ch.getData('move');
 
       if(allowMove)

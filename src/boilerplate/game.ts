@@ -14,7 +14,7 @@ const config: GameConfig = {
   height: 600,
   type: Phaser.AUTO,
   parent: "game",
-  zoom:2,
+
 //  pixelArt : true,
   scene: [PreloadScene, MainScene],
   physics: {
