@@ -224,6 +224,7 @@ export class MainScene extends Phaser.Scene {
         //sp.body.x = vec.x;
         //sp.body.y  = vec.y;
       }
+
     }).bind(this));
   }
   }
@@ -231,7 +232,7 @@ export class MainScene extends Phaser.Scene {
       update(time: number, delta: number): void
       {
          this.drawGraphicsPath();
-         this.moveBalls();
+        this.moveBalls();
       }
 
 }
