@@ -186,8 +186,9 @@ export class MainScene extends Phaser.Scene {
       if(active)
       {
         for (let i = count; i >=  0; i--) {
-          ch[i].setData('move',true);
-          ch[i].getData('tween').resume();
+            ch[i].getData('tween').resume();
+            ch[i].setData('move',true);
+
         }
       }
       else {
@@ -217,9 +218,10 @@ export class MainScene extends Phaser.Scene {
         var vec = ch.getData('vector');
         var sp = <Phaser.Physics.Arcade.Sprite>ch;
         var t = sp.z;
+        if(t==0)return;
         this.path.getPoint(t,vec);
         sp.setPosition(vec.x,vec.y);
-        sp.setDepth(ch.y);
+        //sp.setDepth(ch.y);
        // sp.refreshBody();
         //sp.body.x = vec.x;
         //sp.body.y  = vec.y;
