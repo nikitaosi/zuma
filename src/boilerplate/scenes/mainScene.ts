@@ -6,7 +6,7 @@
 import {Player} from "../Player";
 
 export class MainScene extends Phaser.Scene {
-  private player: Player;
+  player: Player;
   private playerBalls: Phaser.Physics.Arcade.Group;
 
   constructor() {
@@ -21,7 +21,7 @@ export class MainScene extends Phaser.Scene {
     this.add.existing(this.player);
     this.cameras.main.setBackgroundColor('#71626f');
     this.input.setDefaultCursor('url(assets/target.cur), pointer');
-
+    this.input.mouse.disableContextMenu();
   };
 
   update(time, delta): void {
