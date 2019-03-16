@@ -42,7 +42,21 @@ export class MainScene extends Phaser.Scene {
      this.createBalls();
      this.debugStopSpace();
     //this.physics.world.
+
+      var config = {
+          key: 'balls',
+          frames: this.anims.generateFrameNumbers('balls',{start:0,end:10,frames:[0,1,2,3,4,5,6,7,8,9]}),
+          frameRate: 6,
+          yoyo: true,
+          repeat: -1
+      };
+
 //
+      var t =  this.anims.create(config);
+      console.log(t);
+
+      //this.add.sprite(300,300,'balls').play('first');
+
   };
 
   collision(ob1,ob2):void
@@ -52,8 +66,8 @@ export class MainScene extends Phaser.Scene {
         let order = ob1.getData('order');
         let order2 = ob2.getData('order');
         beadsLog.debug("Столкновение "+order+" и "+order2 + ' шара');
-      this.setActiveBalls(ob1.getData('order'),true);
-      MainScene.checkColl = false;
+        this.setActiveBalls(ob1.getData('order'),true);
+        MainScene.checkColl = false;
     }
 
   }
@@ -87,17 +101,14 @@ export class MainScene extends Phaser.Scene {
     this.tween = [];
     this.graphics = this.add.graphics();
     this.path = new Phaser.Curves.Path(50,550);
-    //this.path.splineTo(vectors);
-   // this.path.lineTo(800, 600);
-   // this.path.lineTo(600, 350);
-    //this.path.ellipseTo(200, 100, 100, 250, false, 0);
+
     this.path.cubicBezierTo(750, 550, 1, 1, 800, 1);
-    //this.path.ellipseTo(60, 60, 0, 360, true);
+
   }
 
   createBalls():void
   {
-    MainScene.ballsCount = 4;
+    MainScene.ballsCount = 10;
     MainScene.ballsCountCurrent = 0;
     MainScene.checkColl = false;
 
@@ -136,13 +147,20 @@ export class MainScene extends Phaser.Scene {
 
         //this.physics.add.collider(r, stat);
         this.physics.add.overlap(r, stat,this.collision, null, this);
+        r.z = 1;
         r.setData('tween',this.tweens.add({
           targets:r,
-          z:1,
+            z:{value:{getEnd:function (target, key, value) {
+                        return 1;
+                    },
+                getStart:function (target, key, value) {
+                    return 0;
+                }}},
           ease:'Sine.EaseInOut',
-          duration:15500,
+          duration:15000,
           // yoyo :true,
           //repeat: -1
+          rotation:  -Math.atan2(this.path.getPoint(0).y - r.y, this.path.getPoint(0).x - r.x)
         }));
 
            //var z = this.add.zone(300,300,20,20);
@@ -186,16 +204,39 @@ export class MainScene extends Phaser.Scene {
       if(active)
       {
         for (let i = count; i >=  0; i--) {
-            ch[i].getData('tween').resume();
+            //ch[i].getData('tween').resume();
             ch[i].setData('move',true);
+            var pos = ch[i].getData('z');
+            console.log("now is "+i);
+            ch[i].setData('tween2',this.tweens.add({
+                targets:ch[i],
+                z:{value:{getEnd:function (target, key, value) {
+                            return 0;
+                        },
+                        getStart:function (target, key, value) {
+                            return pos;
+                        }}},
+                ease:'Sine.EaseInOut',
+                duration:15000/2,
+                // yoyo :true,
+                //repeat: -1
+                rotateToPath:true,
+                // @ts-ignore
+                rotation :Math.atan2(this.path.getPoint(ch[i].getData('tween').progress).y - ch[i].y, this.path.getPoint(ch[i].getData('tween').progress).x - ch[i].x)
+            }));
 
         }
       }
       else {
         ball.disableBody(true,true);
         for (let i = 0; i <  count; i++) {
+
+            var tw :Phaser.Tweens.Tween =  ch[i].getData('tween');
+
+            // @ts-ignore
+           ch[i].setData('z',tw.progress);
           ch[i].setData('move',false);
-          ch[i].getData('tween').pause();
+          ch[i].getData('tween').stop();
         }
       }
   }
@@ -217,7 +258,7 @@ export class MainScene extends Phaser.Scene {
       {
         var vec = ch.getData('vector');
         var sp = <Phaser.Physics.Arcade.Sprite>ch;
-        var t = sp.z;
+        var t = sp.z;;
         if(t==0)return;
         this.path.getPoint(t,vec);
         sp.setPosition(vec.x,vec.y);
