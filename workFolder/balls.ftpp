@@ -1,0 +1,42 @@
+{
+  "meta": {
+    "version": "0.5.7"
+  },
+  "savePath": "",
+  "images": [],
+  "folders": [
+    "C:/Users/homepc/Desktop/ball/1",
+    "C:/Users/homepc/Desktop/ball/2",
+    "C:/Users/homepc/Desktop/ball/3",
+    "C:/Users/homepc/Desktop/ball/4",
+    "C:/Users/homepc/Desktop/ball/5",
+    "C:/Users/homepc/Desktop/ball/6",
+    "C:/Users/homepc/Desktop/ball/7"
+  ],
+  "packOptions": {
+    "textureName": "texture",
+    "textureFormat": "png",
+    "removeFileExtension": false,
+    "prependFolderName": true,
+    "base64Export": false,
+    "tinify": false,
+    "tinifyKey": "",
+    "scale": 1,
+    "filter": "none",
+    "exporter": "JSON (hash)",
+    "fileName": "pack-result",
+    "savePath": "",
+    "width": 1000,
+    "height": 700,
+    "fixedSize": true,
+    "powerOfTwo": false,
+    "padding": 0,
+    "extrude": 0,
+    "allowRotation": true,
+    "allowTrim": false,
+    "trimMode": "trim",
+    "detectIdentical": false,
+    "packer": "MaxRectsBin",
+    "packerMethod": "BestLongSideFit"
+  }
+}

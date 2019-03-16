@@ -40,11 +40,18 @@ export class Ball extends Phaser.GameObjects.Sprite {
         this.y += this.ySpeed * delta;
         this.born += delta;
         if (this.born > 1200) {
+            this.x = 0;
+            this.y = 0;
+
+
             this.direction = 0;
             this.xSpeed = 0;
             this.ySpeed = 0;
             this.born = NaN;
-            Phaser.Utils.Array.SendToBack((<MainScene> this.scene).player.balls, this);
+            console.log(this.scene.children);
+           this.scene.children.remove(this);
+           //console.log(this.scene.children);
+            //Phaser.Utils.Array.SendToBack((<MainScene> this.scene).player.balls, this);
             //this.setPosition(-50,0);
         }
     }
