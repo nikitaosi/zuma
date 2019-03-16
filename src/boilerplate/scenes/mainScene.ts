@@ -42,12 +42,20 @@ export class MainScene extends Phaser.Scene {
      this.createBalls();
      this.debugStopSpace();
     //this.physics.world.
-
+      this.textures.addSpriteSheetFromAtlas(
+          'balls1',
+          {
+              atlas: 'balls',
+              frame: '1/0001.png',
+              frameWidth: 100,
+              frameHeight: 100,
+              endFrame: 9
+          });
       var config = {
-          key: 'balls',
-          frames: this.anims.generateFrameNumbers('balls',{start:0,end:10,frames:[0,1,2,3,4,5,6,7,8,9]}),
-          frameRate: 6,
-          yoyo: true,
+          key: 'ballsanim',
+          frames: this.anims.generateFrameNumbers('balls1',{start:2,end:8,first:1}),
+          frameRate: 16,
+          //yoyo: true,
           repeat: -1
       };
 
@@ -55,7 +63,7 @@ export class MainScene extends Phaser.Scene {
       var t =  this.anims.create(config);
       console.log(t);
 
-      //this.add.sprite(300,300,'balls').play('first');
+      this.add.sprite(300,300,'balls1').play('ballsanim');
 
   };
 
