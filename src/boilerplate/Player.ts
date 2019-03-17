@@ -26,12 +26,15 @@ export class Player extends Phaser.GameObjects.Container {
             if (i<4) {
                 this.balls[i] = new Ball(scene, 0, 0, i);
                 scene.physics.world.enable(this.balls[i]);
+                this.balls[i].body.isCircle = true;
             } else if (i<8) {
                 this.balls[i] = new Ball(scene, 0, 0, i-4);
                 scene.physics.world.enable(this.balls[i]);
+                this.balls[i].body.isCircle = true;
             } else {
                 this.balls[i] = new Ball(scene, 0, 0, i-8);
                 scene.physics.world.enable(this.balls[i]);
+                this.balls[i].body.isCircle = true;
             }
         }
 
@@ -43,6 +46,7 @@ export class Player extends Phaser.GameObjects.Container {
 
             if (pointer.leftButtonDown() && !this.blockPlayer) {
               this.blockPlayer = true;
+              this.timedEvent = this.scene.time.addEvent({ delay: 400, callback: function(){this.blockPlayer = false}, callbackScope: this});
               this.remove(this.balls[0], false);
               scene.add.existing(this.balls[0]);
               this.balls[0].fire(this,pointer);

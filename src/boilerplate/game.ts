@@ -16,9 +16,9 @@ const config: GameConfig = {
   parent: "game",
   scene: [PreloadScene, MainScene],
   physics: {
-    debug: true,
     default: "arcade",
     arcade: {
+      debug: true,
     }
   },
 
