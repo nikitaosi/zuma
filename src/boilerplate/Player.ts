@@ -47,11 +47,6 @@ export class Player extends Phaser.GameObjects.Container {
               Phaser.Utils.Array.MoveTo(this.balls, this.balls[0], this.ballCount-1);
               this.balls[0].x = 0;
               this.add(this.balls[1]);
-              this.balls[1].setPosition(-50,0);
-              this.balls.forEach(function (ball){
-                  console.log(ball.x, ', ', ball.y);
-              }, this.balls);
-              console.log(' ');
             }
 
 //          if (pointer.leftButtonDown()) {
@@ -62,6 +57,10 @@ export class Player extends Phaser.GameObjects.Container {
 //              Phaser.Utils.Array.RotateRight(this.balls);
 //              this.balls[0].x = 0;
 //              //this.balls[1].setPosition(-50,0);
+//              this.balls.forEach(function (ball){
+//                  console.log(ball.x, ', ', ball.y);
+//              }, this.balls);
+//              console.log(' ');
             //          }
 
             if (pointer.rightButtonDown()) {

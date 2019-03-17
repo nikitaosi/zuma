@@ -44,8 +44,7 @@ export class Ball extends Phaser.GameObjects.Sprite {
             this.xSpeed = 0;
             this.ySpeed = 0;
             this.born = NaN;
-            Phaser.Utils.Array.SendToBack((<MainScene> this.scene).player.balls, this);
-            //this.setPosition(-50,0);
+            this.setPosition(-50,0);
         }
     }
 }
