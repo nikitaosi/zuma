@@ -5,7 +5,6 @@ export class Player extends Phaser.GameObjects.Container {
     balls: Ball[];
     private ballCount:integer;
     private ballPoint: integer;
-    private ballSwap: Ball;
     public blockPlayer: boolean;
     public ballsUpdate(time, delta): void {
         this.balls.forEach(function (b) {
@@ -26,12 +25,15 @@ export class Player extends Phaser.GameObjects.Container {
             if (i<4) {
                 this.balls[i] = new Ball(scene, 0, 0, i);
                 scene.physics.world.enable(this.balls[i]);
+                this.balls[i].body.isCircle = true;
             } else if (i<8) {
                 this.balls[i] = new Ball(scene, 0, 0, i-4);
                 scene.physics.world.enable(this.balls[i]);
+                this.balls[i].body.isCircle = true;
             } else {
                 this.balls[i] = new Ball(scene, 0, 0, i-8);
                 scene.physics.world.enable(this.balls[i]);
+                this.balls[i].body.isCircle = true;
             }
         }
 
@@ -42,7 +44,9 @@ export class Player extends Phaser.GameObjects.Container {
         scene.input.on('pointerdown', function (pointer) {
 
             if (pointer.leftButtonDown() && !this.blockPlayer) {
+              this.scene.popsound.play();
               this.blockPlayer = true;
+              this.scene.time.addEvent({ delay: 400, callback: function(){this.blockPlayer = false}, callbackScope: this});
               this.remove(this.balls[0], false);
               scene.add.existing(this.balls[0]);
               this.balls[0].fire(this,pointer);
@@ -52,6 +56,7 @@ export class Player extends Phaser.GameObjects.Container {
             }
 
             if (pointer.rightButtonDown()) {
+                this.scene.reloadsound.play();
                 this.ballPoint = this.balls[0].x;
                 this.balls[0].x = this.balls[1].x;
                 this.balls[1].x = this.ballPoint;

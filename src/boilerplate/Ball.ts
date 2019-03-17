@@ -11,12 +11,13 @@ export class Ball extends Phaser.Physics.Arcade.Sprite {
 
     constructor (scene: MainScene, x, y, i) {
         super(scene, x-50, y, 'balls', i);
-        this.speed = 0.5;
+        this.speed = 0.8;
         this.direction = 0;
         this.xSpeed = 0;
         this.ySpeed = 0;
         this.playerX = x;
         this.playerY = y;
+
     }
 
     fire(player, target): void {
