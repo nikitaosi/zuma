@@ -8,6 +8,7 @@ import {Player} from "../Player";
 export class MainScene extends Phaser.Scene {
   player: Player;
   private playerBalls: Phaser.Physics.Arcade.Group;
+  private block: number;
 
   constructor() {
     super({
@@ -22,10 +23,14 @@ export class MainScene extends Phaser.Scene {
     this.cameras.main.setBackgroundColor('#71626f');
     this.input.setDefaultCursor('url(assets/target.cur), pointer');
     this.input.mouse.disableContextMenu();
+    this.block = 0;
   };
 
   update(time, delta): void {
     this.player.ballsUpdate(time, delta);
+
+    this.block += delta;
+    if (this.block > 300) {this.player.blockPlayer = false; this.block = 0};
   }
 
 }

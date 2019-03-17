@@ -4,8 +4,9 @@ import {Ball} from "./Ball";
 export class Player extends Phaser.GameObjects.Container {
     balls: Ball[];
     private ballCount:integer;
-    private BallPoint: integer;
-    private BallSwap: Ball;
+    private ballPoint: integer;
+    private ballSwap: Ball;
+    public blockPlayer: boolean;
     public ballsUpdate(time, delta): void {
         this.balls.forEach(function (b) {
             b.update(time, delta);
@@ -40,7 +41,8 @@ export class Player extends Phaser.GameObjects.Container {
 
         scene.input.on('pointerdown', function (pointer) {
 
-            if (pointer.leftButtonDown()) {
+            if (pointer.leftButtonDown() && !this.blockPlayer) {
+              this.blockPlayer = true;
               this.remove(this.balls[0], false);
               scene.add.existing(this.balls[0]);
               this.balls[0].fire(this,pointer);
@@ -49,25 +51,12 @@ export class Player extends Phaser.GameObjects.Container {
               this.add(this.balls[1]);
             }
 
-//          if (pointer.leftButtonDown()) {
-//              this.remove(this.balls[0], false);
-//              scene.add.existing(this.balls[0]);
-//              this.balls[0].fire(this,pointer);
-//              setTimeout((function (){console.log(this.balls[0].x, ', ', this.balls[0].x); console.log(this.balls);}).bind(this), 200);
-//              Phaser.Utils.Array.RotateRight(this.balls);
-//              this.balls[0].x = 0;
-//              //this.balls[1].setPosition(-50,0);
-//              this.balls.forEach(function (ball){
-//                  console.log(ball.x, ', ', ball.y);
-//              }, this.balls);
-//              console.log(' ');
-            //          }
-
             if (pointer.rightButtonDown()) {
                 this.ballPoint = this.balls[0].x;
                 this.balls[0].x = this.balls[1].x;
                 this.balls[1].x = this.ballPoint;
                 Phaser.Utils.Array.Swap(this.balls, this.balls[0], this.balls[1])
+                console.log(this.scene);
             }
 
             }, this);

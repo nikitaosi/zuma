@@ -1,6 +1,6 @@
 import {MainScene} from "./scenes/mainScene";
 
-export class Ball extends Phaser.GameObjects.Sprite {
+export class Ball extends Phaser.Physics.Arcade.Sprite {
     private speed: number;
     private direction: number;
     private xSpeed: number;
